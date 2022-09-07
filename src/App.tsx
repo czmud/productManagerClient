@@ -1,12 +1,16 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { ProductContainer } from './components/productContainer';
+import { Main } from './views/main';
+import { ProductView } from './views/productView';
 
 function App() {
   return (
     <div className="App">
-      <h1>Product Manager</h1>
-      <ProductContainer/>
+      <Routes>
+        <Route path="" element={<Main/>}/>
+        <Route path="products/:id" element={<ProductView/>}/>
+      </Routes>
     </div>
   );
 }
