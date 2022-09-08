@@ -1,12 +1,11 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ProductForm } from '../components/productForm';
-import { EditProduct } from '../models/editProduct';
+import { FormProduct } from '../models/formProduct';
 
 
 const initialProduct = {
-    _id: "",
     title: "",
     price: 0,
     description: "",
@@ -15,14 +14,14 @@ const initialProduct = {
 
 export const ProductEdit = () => {
     const { id } = useParams();
-    const [ oneProduct, setOneProduct ] = useState<EditProduct>(initialProduct);
+    const [ oneProduct, setOneProduct ] = useState<FormProduct>(initialProduct);
     const [ productIsFetched, setProductIsFetched ] = useState(false);
     const navigate = useNavigate();
 
     useEffect( () => {
         axios.get("http://localhost:8000/api/products/"+id)
             .then( response => { setOneProduct(
-                new EditProduct(
+                new FormProduct(
                 response.data.product.title,
                 response.data.product.price,
                 response.data.product.description
@@ -36,7 +35,7 @@ export const ProductEdit = () => {
         navigate("/products/"+id);
     }
 
-    const updateExistingProduct = (event: FormEvent, successCallback: Function, updateProduct: EditProduct ) => {
+    const updateExistingProduct = (event: FormEvent, successCallback: Function, updateProduct: FormProduct ) => {
         event.preventDefault();
         axios.put("http://localhost:8000/api/products/update/"+id, updateProduct)
             .then( results => successCallback())
@@ -44,6 +43,10 @@ export const ProductEdit = () => {
     }
 
     return(
-        productIsFetched ? <ProductForm product={oneProduct} saveUpdateCallback={updateExistingProduct} successCallback={() => returnToView() }/> : null
+        <div>
+            <p><Link to={"/"}>Home</Link></p>
+            <p><Link to={"/products/"+id}>edit</Link></p>
+            {productIsFetched ? <ProductForm product={oneProduct} saveUpdateCallback={updateExistingProduct} successCallback={() => returnToView() }/> : null}
+        </div>
     )
 }

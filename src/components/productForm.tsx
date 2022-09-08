@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useReducer } from 'react';
-import { EditProduct } from '../models/editProduct';
+import { FormProduct } from '../models/formProduct';
 
 const formStyle = {
     display: "flex",
@@ -7,7 +7,7 @@ const formStyle = {
 }
 
 interface FormProps{
-    product: EditProduct;
+    product: FormProduct;
     saveUpdateCallback: Function;
     successCallback: Function;
 }
@@ -16,7 +16,7 @@ type Action =
 | { type: string, payload: string }
 | { type: string, payload: number };
 
-function reducer( oneProduct: EditProduct, action: Action ){
+function reducer( oneProduct: FormProduct, action: Action ){
     return {
         ...oneProduct,
         [action.type]: action.payload

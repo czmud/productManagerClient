@@ -3,8 +3,7 @@ import axios from 'axios';
 import { ProductDisplay } from '../components/productDisplay';
 import { ProductForm } from '../components/productForm';
 import { Product } from '../models/product';
-import { CreateProduct } from '../models/createProduct';
-import { EditProduct } from '../models/editProduct';
+import { FormProduct } from '../models/formProduct';
 
 
 
@@ -25,7 +24,7 @@ export const Main = () => {
         setProducts([...products, addedProduct ] );
     }
 
-    const saveNewProduct = (event: FormEvent, successCallback: Function, newProduct: EditProduct ) => {
+    const saveNewProduct = (event: FormEvent, successCallback: Function, newProduct: FormProduct ) => {
         event.preventDefault();
         axios.post("http://localhost:8000/api/products/new", newProduct)
         .then( response => successCallback(response.data.product))
@@ -35,7 +34,7 @@ export const Main = () => {
     return(
         <>
         <h1>Product Manager</h1>
-        <ProductForm product={new CreateProduct()} saveUpdateCallback={saveNewProduct} successCallback={addToDom} />
+        <ProductForm product={new FormProduct()} saveUpdateCallback={saveNewProduct} successCallback={addToDom} />
         <ProductDisplay products={products} removeFromDom={removeFromDom} />
         </>
     )
