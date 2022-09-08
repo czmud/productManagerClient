@@ -1,11 +1,9 @@
-export class Product{
-    _id: string;
+export class EditProduct{
     title: string;
     price: number;
     description: string;
 
-    constructor( _id: string, title: string, price: number, description: string){
-        this._id = _id;
+    constructor( title: string, price: number, description: string ){
         this.title = title;
         this.price = price;
         this.description = description;
